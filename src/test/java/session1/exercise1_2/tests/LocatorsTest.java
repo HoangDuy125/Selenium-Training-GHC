@@ -5,7 +5,7 @@ import session1.base.BaseTest;
 import session1.exercise1_2.locators.ElementLocators;
 import session1.utils.ConfigReader;
 
-public class LocatorTest extends BaseTest {
+public class LocatorsTest extends BaseTest {
 
     @Test
     public void verifyLocatorStrategies() {

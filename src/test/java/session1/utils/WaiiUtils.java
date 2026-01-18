@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class WaitUtils {
+public class WaiiUtils {
 
     public static WebDriverWait getWait(WebDriver driver) {
         int timeout = Integer.parseInt(ConfigReader.get("explicit.wait"));
