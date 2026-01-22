@@ -1,4 +1,4 @@
-package tests;
+package session1.exercise1_1.tests;
 
 import java.io.FileInputStream;
 import java.util.Properties;
