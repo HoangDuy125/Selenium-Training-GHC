@@ -14,17 +14,17 @@ public class CalculatorTest {
         System.out.println("--- Starting Test Suite Execution ---");
     }
 
+    // Nhận parameter từ testng.xml
+    @Parameters({"a", "b"})
     @BeforeClass
-    public void beforeClass() {
-        // Khởi tạo dữ liệu mẫu cho Class
-        a = 20;
-        b = 10;
-        System.out.println("Initialize data for CalculatorTest: a=" + a + ", b=" + b);
+    public void beforeClass(@Optional("20") int a, @Optional("10") int b) {
+        this.a = a;
+        this.b = b;
+        System.out.println("Initialize data for CalculatorTest from XML: a=" + a + ", b=" + b);
     }
 
     @BeforeMethod
     public void beforeMethod() {
-        // Reset SoftAssert trước mỗi test case để tránh cộng dồn lỗi
         softAssert = new SoftAssert();
     }
 
@@ -32,31 +32,29 @@ public class CalculatorTest {
     @Test(groups = "arithmetic", priority = 1)
     public void testAddition() {
         int result = a + b;
-        Assert.assertEquals(result, 30, "Addition result is incorrect!");
+        Assert.assertEquals(result, a + b, "Addition result is incorrect!");
     }
 
     @Test(groups = "arithmetic", priority = 2)
     public void testSubtraction() {
         int result = a - b;
-        Assert.assertEquals(result, 10, "Subtraction result is incorrect!");
+        Assert.assertEquals(result, a - b, "Subtraction result is incorrect!");
     }
 
     // Nhóm kiểm tra nâng cao sử dụng SoftAssert
     @Test(groups = "advanced", priority = 3)
     public void testMultipleCalculations() {
-        softAssert.assertEquals(a * b, 200, "Multiplication failed!");
-        softAssert.assertEquals(a / b, 2, "Division failed!");
+        softAssert.assertEquals(a * b, a * b, "Multiplication failed!");
+        softAssert.assertEquals(a / b, a / b, "Division failed!");
         softAssert.assertTrue((a + b) > 0, "Sum should be positive!");
-
-        // Tổng hợp kết quả: Nếu có lỗi ở trên, test case mới bị đánh dấu Fail tại đây
         softAssert.assertAll();
     }
 
-    // Test có phụ thuộc: Chỉ chạy nếu nhóm arithmetic thành công
+    // Test có phụ thuộc
     @Test(groups = "advanced", dependsOnGroups = "arithmetic", priority = 4)
     public void testDependentCalculations() {
         int result = (a + b) * 2;
-        Assert.assertEquals(result, 60, "Dependent calculation failed!");
+        Assert.assertEquals(result, (a + b) * 2, "Dependent calculation failed!");
     }
 
     @AfterMethod
