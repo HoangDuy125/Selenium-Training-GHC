@@ -12,6 +12,7 @@ public class ElementLocators {
         return By.xpath(String.format(INPUT_BY_ID, id));
     }
 
+
     public static By menuByText(String text) {
         return By.xpath(String.format(MENU_BY_TEXT, text));
     }
