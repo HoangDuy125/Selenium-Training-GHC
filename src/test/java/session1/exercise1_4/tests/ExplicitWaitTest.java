@@ -1,35 +1,58 @@
 package session1.exercise1_4.tests;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import session1.base.BaseTest;
 import session1.exercise1_4.locators.ExplicitWaitLocators;
-import session1.utils.ConfigReader;
-import session1.utils.WaitUtils;
 
-public class ExplicitWaitTest {
-    public static void main(String[] args) {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
+import java.time.Duration;
 
-        try {
-            driver.get(ConfigReader.get("saucedemo.url"));
+public class ExplicitWaitTest extends BaseTest {
 
+    //
+    @Test
+    public void testDynamicLoading() {
 
-            WaitUtils.waitForElementVisible(driver, ExplicitWaitLocators.USERNAME_FIELD);
-            driver.findElement(ExplicitWaitLocators.USERNAME_FIELD).sendKeys(ConfigReader.get("sauce.username"));
+        // URL
+        driver.get("https://the-internet.herokuapp.com/dynamic_loading/1");
 
-            driver.findElement(ExplicitWaitLocators.PASSWORD_FIELD).sendKeys(ConfigReader.get("sauce.password"));
+        // Click Start button
+        driver.findElement(ExplicitWaitLocators.START_BUTTON).click();
 
-            WaitUtils.waitForElementClickable(driver, ExplicitWaitLocators.LOGIN_BUTTON);
-            driver.findElement(ExplicitWaitLocators.LOGIN_BUTTON).click();
+        // Explicit wait with CUSTOM ExpectedCondition
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
-            WaitUtils.waitForElementVisible(driver, ExplicitWaitLocators.SUCCESS_TITLE);
-            System.out.println("Login thành công: " + driver.findElement(ExplicitWaitLocators.SUCCESS_TITLE).getText());
+        WebElement finishText = wait.until(new FinishTextVisibleCondition());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            driver.quit();
+        // Verification
+        Assert.assertEquals(
+                finishText.getText(),
+                "Hello World!",
+                "Finish text không đúng sau khi dynamic loading!"
+        );
+    }
+
+    private static class FinishTextVisibleCondition implements ExpectedCondition<WebElement> {
+
+        @Override
+        public WebElement apply(WebDriver driver) {
+            WebElement finishElement = driver.findElement(ExplicitWaitLocators.FINISH_TEXT);
+
+            if (finishElement.isDisplayed()) {
+                return finishElement;
+            }
+
+            return null;
+        }
+
+        @Override
+        public String toString() {
+            return "Finish text (Hello World!) to be visible";
         }
     }
 }
