@@ -10,10 +10,8 @@ public class LoginPOMTest extends BaseTest {
 
     @Test
     public void testLoginSuccessfullyWithPOM() {
-
-        driver.get("https://practicetestautomation.com/practice-test-login/");
-
-        LoginPage loginPage = new LoginPage(driver);
+        // Thay driver.get() bằng cách gọi .open() từ object của LoginPage
+        LoginPage loginPage = new LoginPage(driver).open();
         SuccessPage successPage = new SuccessPage(driver);
 
         loginPage.login("student", "Password123");
@@ -24,10 +22,9 @@ public class LoginPOMTest extends BaseTest {
 
     @Test
     public void testInvalidLoginWithPOM() {
+        // Thay driver.get() bằng cách gọi .open() từ object của LoginPage
+        LoginPage loginPage = new LoginPage(driver).open();
 
-        driver.get("https://practicetestautomation.com/practice-test-login/");
-
-        LoginPage loginPage = new LoginPage(driver);
         loginPage.login("invalid", "invalid");
 
         Assert.assertTrue(driver.getCurrentUrl().contains("practice-test-login"),

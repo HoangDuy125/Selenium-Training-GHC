@@ -19,6 +19,12 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
+    // Thêm method open() theo yêu cầu
+    public LoginPage open() {
+        driver.get("https://practicetestautomation.com/practice-test-login/");
+        return this;
+    }
+
     public void enterUsername(String username) {
         usernameField.clear();
         usernameField.sendKeys(username);
