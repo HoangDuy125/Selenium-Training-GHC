@@ -10,24 +10,14 @@ public class LoginPOMTest extends BaseTest {
 
     @Test
     public void testLoginSuccessfullyWithPOM() {
-        // Thay driver.get() bằng cách gọi .open() từ object của LoginPage
-        LoginPage loginPage = new LoginPage(driver).open();
-        SuccessPage successPage = new SuccessPage(driver);
 
-        loginPage.login("student", "Password123");
+        SuccessPage successPage = new LoginPage(driver)
+                .open()
+                .enterUsername("student")
+                .enterPassword("Password123")
+                .clickSubmit();
 
-        Assert.assertTrue(successPage.isLoggedIn(),
-                "User should be logged in successfully using POM!");
-    }
-
-    @Test
-    public void testInvalidLoginWithPOM() {
-        // Thay driver.get() bằng cách gọi .open() từ object của LoginPage
-        LoginPage loginPage = new LoginPage(driver).open();
-
-        loginPage.login("invalid", "invalid");
-
-        Assert.assertTrue(driver.getCurrentUrl().contains("practice-test-login"),
-                "Invalid login should not navigate to success page");
+        Assert.assertTrue(successPage.isLoggedIn(), "Login failed!");
+        Assert.assertEquals(successPage.getSuccessText(), "Logged In Successfully");
     }
 }

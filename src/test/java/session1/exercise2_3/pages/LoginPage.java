@@ -25,18 +25,21 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    public void enterUsername(String username) {
+    public LoginPage enterUsername(String username) {
         usernameField.clear();
         usernameField.sendKeys(username);
+        return this;  // Enable method chaining
     }
 
-    public void enterPassword(String password) {
+    public LoginPage enterPassword(String password) {
         passwordField.clear();
         passwordField.sendKeys(password);
+        return this;
     }
 
-    public void clickSubmit() {
+    public SuccessPage clickSubmit() {
         submitButton.click();
+        return new SuccessPage(driver);  // Return new page object
     }
 
     public void login(String username, String password) {
