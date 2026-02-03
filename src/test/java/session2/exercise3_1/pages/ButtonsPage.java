@@ -37,4 +37,16 @@ public class ButtonsPage extends BasePage {
     public String getDynamicClickMessage() {
         return driver.findElement(By.id("dynamicClickMessage")).getText();
     }
+
+    // Drag and Drop
+    public void dragAndDrop() {
+        driver.navigate().to("https://demoqa.com/droppable");
+        WebElement source = driver.findElement(By.id("draggable"));
+        WebElement target = driver.findElement(By.id("droppable"));
+        new Actions(driver).dragAndDrop(source, target).perform();
+    }
+
+    public String getDropMessage() {
+        return driver.findElement(By.xpath("//div[@id='droppable']/p")).getText();
+    }
 }
