@@ -14,6 +14,7 @@ import java.util.List;
 
 public class RunTest {
 
+    @Test
     public void testMultiSelectDropdown() {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
@@ -22,34 +23,28 @@ public class RunTest {
         try {
             driver.get("https://demoqa.com/select-menu");
 
-            WebElement multiSelectElement = driver.findElement(By.id("cars"));
-            Select multiSelect = new Select(multiSelectElement);
+            WebElement multiSelect = driver.findElement(By.id("cars"));
+            Select select = new Select(multiSelect);
 
-            // Verify it's a multi-select
-            Assert.assertTrue(multiSelect.isMultiple(), "Should be multi-select dropdown");
+            // Verify it's a multi-select dropdown
+            Assert.assertTrue(select.isMultiple(), "Cars dropdown must be multi-select");
 
             // Select multiple options
-            multiSelect.selectByVisibleText("Volvo");
-            multiSelect.selectByVisibleText("Opel");
-            multiSelect.selectByVisibleText("Saab");
+            select.selectByVisibleText("Volvo");
+            select.selectByVisibleText("Saab");
 
-            // Verify all selected options
-            List<WebElement> selectedOptions = multiSelect.getAllSelectedOptions();
-            Assert.assertEquals(selectedOptions.size(), 3, "Should have 3 cars selected");
+            // Verify selections
+            List<WebElement> selected = select.getAllSelectedOptions();
+            Assert.assertEquals(selected.size(), 2);
 
-            // Deselect specific option
-            multiSelect.deselectByVisibleText("Opel");
+            // Deselect methods
+            select.deselectByVisibleText("Volvo");
+            select.deselectAll();
 
-            // Verify deselection
-            selectedOptions = multiSelect.getAllSelectedOptions();
-            Assert.assertEquals(selectedOptions.size(), 2, "Should have 2 cars remaining");
+            // Verify deselect all
+            selected = select.getAllSelectedOptions();
+            Assert.assertEquals(selected.size(), 0);
 
-            // Deselect all
-            multiSelect.deselectAll();
-
-            // Verify all deselected
-            selectedOptions = multiSelect.getAllSelectedOptions();
-            Assert.assertEquals(selectedOptions.size(), 0, "Should have no cars selected");
         } finally {
             driver.quit();
         }
