@@ -54,6 +54,22 @@
             <version>2.0.12</version>
         </dependency>
 
+        <!-- JSON parsing for data-driven tests -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Excel parsing for data-driven tests -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.3.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <!-- ================= BUILD ================= -->

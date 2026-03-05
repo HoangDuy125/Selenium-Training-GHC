@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 24px;
+            color: #1b1f23;
+            background: #ffffff;
+        }
+
+        .primary-button {
+            background: #005fcc;
+            color: #ffffff;
+            border: 1px solid #005fcc;
+            padding: 10px 16px;
+            cursor: pointer;
+        }
+
+        .hint {
+            color: #555555;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Exercise 5.3 Accessibility Test Page</h1>
+
+    <a id="homeLink" href="#content">Skip to content</a>
+
+    <section id="content">
+        <p class="hint">Use keyboard Tab key to navigate between elements.</p>
+
+        <label for="nameInput">Full Name</label>
+        <input id="nameInput" type="text" aria-describedby="nameHelp">
+        <small id="nameHelp">Required for profile update.</small>
+
+        <div style="margin-top: 16px;">
+            <button id="actionButton"
+                    type="button"
+                    class="primary-button"
+                    aria-label="Submit profile update"
+                    role="button">
+                Submit
+            </button>
+        </div>
+
+        <img id="profileImage"
+             src="https://via.placeholder.com/80"
+             alt="Profile placeholder image">
+
+        <div id="statusMessage" aria-live="polite" style="margin-top: 12px;">
+            Ready
+        </div>
+    </section>
+</main>
+</body>
+</html>
